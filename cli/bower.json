@@ -1,0 +1,19 @@
+{
+  "name": "cli",
+  "version": "0.8.0",
+  "homepage": "https://github.com/fernandeze/api-umbrella-admin",
+  "authors": [
+    "eneko <e.fernandezbreis@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ember-data": "~2.2.0"
+  }
+}
