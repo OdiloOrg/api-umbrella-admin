@@ -1,19 +1,27 @@
-var ApiModel = function () {
-    this.name = '';
-    this.sortOrder = '';
-    this.backendProtocol = '';
-    this.frontendHost = '';
-    this.backendHost = '';
-    this.balanceAlgorithm = '';
-    this.createdAt = '';
-    this.updatedAt = '';
-    this.creator = '';
-    this.updater = '';
-    this.servers = '';
-    this.urlMatches = '';
-    this.settings = '';
-    this.subSettings = '';
-    this.rewrites = '';
-}
+'use strict';
 
-module.exports = ApiModel;
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
+
+var ApiSchema = new Schema({
+    name: String,
+    sortOrder: String,
+    backendProtocol: String,
+    frontendHost: String,
+    backendHost: String,
+    balanceAlgorithm: String,
+    createdAt: String,
+    updatedAt: String,
+    creator: String,
+    updater: String,
+    servers: String,
+    urlMatches: String,
+    settings: String,
+    subSettings: String,
+    rewrites: String
+});
+
+ApiSchema.set('toJSON', { getters: true, virtuals: false });
+
+var Api = mongoose.model('Api', ApiSchema);
+

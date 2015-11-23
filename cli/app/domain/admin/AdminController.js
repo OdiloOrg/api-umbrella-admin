@@ -1,17 +1,21 @@
 'use strict'
 
-var q = require('q'),
+var Q = require('q'),
     request = require('request');
 
 module.exports = {
-    check : function () {
-        var deferred = q.defer();
-        request.get('http://192.168.33.10/api-umbrella/v1', function (err, response, body) {
-            console.log(response);
-            if (response.statusCode == 403)
-                deferred.reject(err);
-            else deferred.resolve(res);
+    app:null,
+    init:function(){
+        this.app=require('../../app.js');
+        console.log("application initialized");
+    },
+    check: function () {
+        return Q.nfcall(request.get, 'http://192.168.33.10/api-umbrella/v1').then(function (response,body) {
+            if (response[0].statusCode != 403)
+                throw new Error("not available");
+            return true;
+        }).catch(function(err){
+            throw err;
         });
-        return deferred.promise;
     }
 };

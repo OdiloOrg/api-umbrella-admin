@@ -7,11 +7,11 @@ Feature: Create API
     Given API Gateway Admin is available
 
   Scenario Outline: Successful Create API
-    Given I want to add <api>
-    And with <path>
+    Given I want to add <name>
+    And with protocol <protocol> with frontendHost <frontendHost> with backendHost <backendHost>
     When I call to create an API
     Then I check that it has been added
 
     Examples:
-      | api     | path    |
-      | /google | /google |
+      | name     | protocol | frontendHost   | backendHost   |
+      | 'google' | 'http'   | '/google' | 'backendHost' |

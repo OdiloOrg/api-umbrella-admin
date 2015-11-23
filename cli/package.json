@@ -4,7 +4,7 @@
   "description": "cli interface for api gateway admin",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber.js -f pretty -b app/features/*.feature"
+    "test": "cucumber.js -f pretty -b app/features/api/update_api.feature"
   },
   "author": "",
   "license": "BSD-2-Clause",
@@ -12,7 +12,8 @@
     "commander": "^2.9.0",
     "q": "^1.4.1",
     "request": "^2.67.0",
-    "bower": "~1.6.5"
+    "bower": "~1.6.5",
+    "mongoose": "~4.2.7"
   },
   "preferGlobal": true,
   "bin": {
