@@ -8,7 +8,7 @@ var resourcesPath = 'app/features/resources/';
 function World() {
 
     this.apiController=  require("../../../domain/api/ApiController.js");
-    this.api;
+    this.api={};
     this.loadFile = function (fileName) {
         var deferred = Q.defer();
         var that=this;

@@ -57,14 +57,8 @@ module.exports = {
         var options = requestConfig.getDeleteOptions({
             url: '/apis/' + apiId
         });
-        return Q.nfcall(request.delete, options).then(function (args) {
-            var body = args[1];
-            if (args[0].statusCode != 200) {
-                throw Error(body.error);
-            }
-            return new Api(body);
-        }).catch(function (err) {
-            throw err;
+        return rp(options).then(function (body) {
+            return true;
         });
     }
 };

@@ -4,7 +4,7 @@
   "description": "cli interface for api gateway admin",
   "main": "index.js",
   "scripts": {
-    "test": "cucumber.js -f pretty -b app/features/api/get_api.feature"
+    "test": "cucumber.js -f pretty -b app/features/api/delete_api.feature"
   },
   "author": "",
   "license": "BSD-2-Clause",

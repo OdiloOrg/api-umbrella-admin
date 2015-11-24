@@ -15,7 +15,6 @@ var ApiSteps = function () {
     this.Then(/^I receive that it has been created$/, function (callback) {
         this.api.should.not.be.null();
         callback();
-
     });
 
     this.Then(/^I could read it$/, function () {
@@ -40,14 +39,28 @@ var ApiSteps = function () {
         callback();
     });
 
-    this.When(/^I call to delete (.*)$/, function (name) {
-        return apiController.delete(name).then(function(deletedApi){
-            api=deletedApi;
+    this.When(/^I call to delete an API whose id is (.*)$/, function (apiId) {
+        this.api.id=apiId;
+        var that = this;
+        return this.apiController.delete(this.api.id).then(function(deleted){
+            that.deleted=deleted;
         });
     });
 
-    this.Then(/^I receive that (.*) has been removed$/, function (name, callback) {
-        api.name.should.be.eql(true);
+    this.Given(/^I could not get it$/, function (callback) {
+        var that = this;
+        this.apiController.get(this.api.id).then(function(api){
+            console.log('deleted error'+api);
+            callback.fail();
+        }).catch(function(err){
+            console.log('deleted ok'+err);
+            callback();
+        });
+    });
+
+
+    this.Then(/^I receive that it has been removed$/, function (callback) {
+        this.deleted.should.be.true();
         callback();
     });
 
