@@ -7,7 +7,7 @@ Feature: Get API
     Given API Gateway Admin is available
 
   Scenario Outline: Successful Get API
-    When I call to get an whose id is <id>
+    When I call to get an API whose id is <id>
     Then I receive an api with <id> and <name>
 
     Examples:

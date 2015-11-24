@@ -27,24 +27,16 @@ var ApiSteps = function () {
     });
 
 
-    this.When(/^I call to create an API$/, function () {
-        return this.apiController.create(api);
-    });
-
-    this.Then(/^I check that it has been added$/, function (callback) {
-        callback.pending();
-    });
-
-    this.When(/^I call to get an whose id is (.*)$/, function (apiId) {
-        return this.apiController.get(apiId).then(function(resultApi){
-            //console.log('get\n' + api);
-            api=resultApi;
+    this.When(/^I call to get an API whose id is (.*)$/, function (apiId) {
+        var that = this;
+        return this.apiController.get(apiId).then(function(api){
+            that.api=api;
         });
     });
 
     this.Then(/^I receive an api with (.*) and (.*)$/, function (id,name, callback) {
-        api.id.should.be.eql(id)
-        api.name.should.be.eql(name);
+        this.api.id.should.be.eql(id)
+        this.api.name.should.be.eql(name);
         callback();
     });
 
