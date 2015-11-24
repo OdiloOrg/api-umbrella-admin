@@ -32,24 +32,18 @@ module.exports = {
         return rp(options).then(function (body) {
             return body.api;
         }).catch(function (err) {
-            console.log(typeof err);
-            console.log(JSON.stringify(err.error));
-            throw response;
+            throw err;
         });
     },
-    update: function (api) {
-        var api = this.createApi(api);
+    update: function (apiId,api) {
         var options = requestConfig.getPutOptions({
-            url: '/apis',
-            json: api.toJSON()
+            url: '/apis/'+apiId,
+            body: JSON.parse(api)
         });
-        return Q.nfcall(request.put, options).then(function (args) {
-            var body = args[1];
-            if (args[0].statusCode != 200) {
-                throw Error(body.error);
-            }
-            return new Api(body);
+        return rp(options).then(function (body) {
+            return true;
         }).catch(function (err) {
+            console.log(""+JSON.stringify(err))
             throw err;
         });
     },

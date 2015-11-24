@@ -1,4 +1,4 @@
-Feature: Create API
+Feature: Update API
 
   As Administration
   I want to update an API to Gateway
@@ -6,12 +6,9 @@ Feature: Create API
   Background:
     Given API Gateway Admin is available
 
-  Scenario Outline: Successful Create API
-    Given I want to update <name>
-    And with protocol <protocol> with frontendHost <frontendHost> with backendHost <backendHost>
-    When I call to update it
-    Then I check that it has been updated
+  Scenario: Successful Update API
+    When I call to update API "2f768543-03ab-47c2-aef0-e4a513651d11" from file "test_update_api.json"
+    Then I receive that it has been updated
+    And I check it
 
-    Examples:
-      | name     | protocol | frontendHost   | backendHost   |
-      | 'google' | 'http'   | '/google' | 'backendHost' |
+

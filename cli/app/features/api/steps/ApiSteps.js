@@ -71,14 +71,31 @@ var ApiSteps = function () {
     });
 
     this.When(/^I call to update it$/, function () {
-        return apiController.update(api).then(function(updatedApi){
-            api=updatedApi;
-        });
     });
 
     this.Then(/^I check that it has been updated$/, function (callback) {
         api.name.should.be.eql('');
         callback();
+    });
+
+
+    this.When(/^I call to update API "([^"]*)" from file "([^"]*)"$/, function (apiId, resource) {
+        this.api.id=apiId;
+        var that = this;
+        return this.loadFile(resource).then(function(api){
+            return that.apiController.update(apiId,api);
+        });
+    });
+
+    this.Then(/^I receive that it has been updated$/, function (callback) {
+        callback();
+    });
+
+    this.Then(/^I check it$/, function () {
+        var that = this;
+        return this.apiController.get(this.api.id).then(function(api){
+            that.api.id.should.be.eql(api.id);
+        });
     });
 
 
