@@ -7,7 +7,8 @@ Feature: Delete API
     Given API Gateway Admin is available
 
   Scenario Outline: Successful Get API
-    When I call to delete an API whose id is <id>
+    Given It exists an API with name "google"
+    When I call to delete it
     Then I receive that it has been removed
     And I could not get it
 

@@ -7,8 +7,9 @@ Feature: Update API
     Given API Gateway Admin is available
 
   Scenario: Successful Update API
-    When I call to update API "2f768543-03ab-47c2-aef0-e4a513651d11" from file "test_update_api.json"
+    Given It exists an API with name "google"
+    When I call to update its name to "amazon"
     Then I receive that it has been updated
-    And I check it
+    And I check that it its new name is "amazon"
 
 
