@@ -1,9 +1,12 @@
 'use strict'
 
-var Q = require('q'),
-    request = require('request'),
+var rp = require('request-promise'),
     requestConfig = require('./../../config/requestConfig.js'),
     mongoose = require('mongoose');
+
+require('request-debug')(rp);
+
+var api = {};
 
 module.exports = {
     createApi: function (apiProperties) {
@@ -12,35 +15,26 @@ module.exports = {
         return api;
     },
     get: function (apiId) {
-        console.log("apiId "+apiId);
         var options = requestConfig.getGetOptions({
             url: '/apis/' + apiId
         });
-        return Q.nfcall(request.get, options).then(function (args) {
-            var body = args[1];
-            if (args[0].statusCode != 200) {
-                throw Error(body.error);
-            }
-            return new Api(body);
-        }).catch(function (err) {
-            throw err;
+        return rp(options).then(function (body) {
+            //console.log('get '+JSON.stringify(body));
+            return body.api;
         });
     },
     create: function (api) {
-        var api = this.createApi(api);
+        var api = '{"api":{"name":"Testing API Backend","sort_order":null,"backend_protocol":"https","frontend_host":"api.data.govapi.foo.com","backend_host":"api.bar.com","balance_algorithm":"least_conn","servers":[{"host":"google.com","port":443}],"url_matches":[{"sort_order":null,"frontend_prefix":"/foo","backend_prefix":"/bar"}],"settings":{"append_query_string":"foo=bar","headers_string":"X-Foo1: Bar\\nX-Bar2: Foo","http_basic_auth":"foo:bar","require_https":"optional","disable_api_key":null,"rate_limit_mode":null,"error_templates":{},"error_data_yaml_strings":{},"rate_limits":[]},"sub_settings":[],"rewrites":[]}}';
         var options = requestConfig.getPostOptions({
             url: '/apis',
-            json: api.toJSON()
+            body: JSON.parse(api)
         });
-        return Q.nfcall(request.post, options).then(function (args) {
-            console.log(args);
-            var body = args[1];
-            if (args[0].statusCode != 200) {
-                throw Error(body.error);
-            }
-            return new Api(body);
+        return rp(options).then(function (body) {
+            return body.api;
         }).catch(function (err) {
-            throw err;
+            console.log(typeof err);
+            console.log(JSON.stringify(err.error));
+            throw response;
         });
     },
     update: function (api) {

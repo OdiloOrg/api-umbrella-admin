@@ -6,12 +6,7 @@ Feature: Create API
   Background:
     Given API Gateway Admin is available
 
-  Scenario Outline: Successful Create API
-    Given I want to add <name>
-    And with protocol <protocol> with frontendHost <frontendHost> with backendHost <backendHost>
-    When I call to create an API
-    Then I check that it has been added
-
-    Examples:
-      | name     | protocol | frontendHost   | backendHost   |
-      | 'google' | 'http'   | '/google' | 'backendHost' |
+  Scenario: Successful Create API
+    When I call to create an API from file "test_create_api.json"
+    Then I receive that it has been created
+    And I could read it

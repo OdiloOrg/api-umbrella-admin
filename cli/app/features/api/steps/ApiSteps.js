@@ -2,36 +2,48 @@
 var should = require('should');
 
 var ApiSteps = function () {
-    var apiController=  require("../../../domain/api/ApiController.js");
 
-    var api={};
-
-    this.Given(/^I want to add (.*)$/, function (apiId, callback) {
-        api.id=apiId;
-        callback();
+    this.When(/^I call to create an API from file "([^"]*)"$/, function (resource) {
+        var that = this;
+        return this.loadFile(resource).then(function(api){
+            return that.apiController.create(api).then(function(createdApi){
+                that.api = createdApi;
+            });
+        });
     });
 
-    this.Given(/^with (.*)$/, function (path, callback) {
-        api.path=path;
+    this.Then(/^I receive that it has been created$/, function (callback) {
+        this.api.should.not.be.null();
         callback();
+
     });
+
+    this.Then(/^I could read it$/, function () {
+        var that = this;
+        return this.apiController.get(this.api.id).then(function(api){
+            that.api.id.should.be.eql(api.id)
+            that.api.name.should.be.eql(api.name);
+        });
+    });
+
 
     this.When(/^I call to create an API$/, function () {
-        return apiController.create(api);
+        return this.apiController.create(api);
     });
 
     this.Then(/^I check that it has been added$/, function (callback) {
         callback.pending();
     });
 
-    this.When(/^I call to get (.*)$/, function (apiName) {
-        return apiController.get(apiName).then(function(resultApi){
-            console.log('get');
+    this.When(/^I call to get an whose id is (.*)$/, function (apiId) {
+        return this.apiController.get(apiId).then(function(resultApi){
+            //console.log('get\n' + api);
             api=resultApi;
         });
     });
 
-    this.Then(/^I receive an api with (.*)$/, function (name, callback) {
+    this.Then(/^I receive an api with (.*) and (.*)$/, function (id,name, callback) {
+        api.id.should.be.eql(id)
         api.name.should.be.eql(name);
         callback();
     });
