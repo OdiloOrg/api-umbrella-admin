@@ -9,7 +9,7 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "commander": "^2.9.0",
+    "commander": "~2.9.0",
     "q": "^1.4.1",
     "bower": "~1.6.5",
     "mongoose": "~4.2.7",
